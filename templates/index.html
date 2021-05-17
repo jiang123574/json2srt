@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剪映json转换为srt字幕</title>
+{#    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">#}
+</head>
+
+<body>
+<h2>使用剪映识别字幕后导出srt</h2>
+<form enctype="multipart/form-data" action="/upload/" method="post">
+    <input type="file" name="myfile"/>
+    <input type="submit" value="开始转换"/>
+</form>
+<h2>使用方法</h2>
+<p>首先将视频导入到剪映电脑版本</p>
+<p>点击识别字幕</p>
+<p>识别完成后关掉剪映</p>
+<p>找到draft.json文件</p>
+<p>windows路径: C:\Users\用户名\AppData\Local\JianyingPro\User Data\Projects\com.lveditor.draft\****-***-***-***-***\draft.json</p>
+<p>macOS路径: 没有mac  未知</p>
+<p>在此页面选择文件</p>
+<p>点击开始转换即可开始下载</p>
+<p>注意:有时候需要关掉下载器才能下载字幕</p>
+<p>另外:转换完成后 up主习惯使用 ARCTIME 进行校对</p>
+<a href="https://space.bilibili.com/903059">如果可以  请关注一下UP主  不胜感激</a>
+</body>
+
+</html>
+
