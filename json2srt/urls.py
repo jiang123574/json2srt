@@ -21,4 +21,3 @@ urlpatterns = [
     path('', views.index),
     path('upload/', views.upload, name='upload'),
 ]
-handler500 = views.page_error
