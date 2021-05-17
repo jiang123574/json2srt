@@ -108,3 +108,9 @@ def file_down(request):
     except:
         return HttpResponse("文件不存在")
     return response
+def page_error(request):
+    error = sys.exc_info()
+    context = {
+        'error': error
+    }
+    return render(request, '500.html', context=context)
