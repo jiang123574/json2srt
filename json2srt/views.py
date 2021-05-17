@@ -29,7 +29,7 @@ def dz(x):
         s = str(int(x // 1000 % 60)).rjust(2, '0')
         m = str(int(x // 1000 // 60)).rjust(2, '0')
         h = "00"
-    elif x / 1000 >= 3600:
+    elif x / y >= 3600:
         ms = str(int(x % 1000)).rjust(3, '0')
         s = str(int(x // 1000 % 60)).rjust(2, '0')
         m = str(int(x // 1000 // 60)).rjust(2, '0')
@@ -40,23 +40,28 @@ def dz(x):
 def json2srt():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     res = json.load(open(os.path.join(base_dir, 'uploads', 'draft.json'), encoding="utf-8"))
-    zm = []
+    if res.get("platform").get("os") == "macOS":
+        y = 1
+    else:
+        y = 1000
+    zm = {}
     for i in res.get("materials").get("texts"):
-        zm.append(i.get("content"))
+        zm[i.get("id")] = i.get("content")
     x = 1
     fo = open(os.path.join(base_dir, 'uploads', "zm.srt"), "w")
-    for i in res.get("tracks")[1].get("segments"):
-        start = i.get("target_timerange").get("start") / 1000
-        end = i.get("target_timerange").get("start") / 1000 + i.get("target_timerange").get("duration") / 1000
-        sjz = "{0}:{1}:{2},{3} --> {4}:{5}:{6},{7}"
-        h, m, s, ms = dz(start)
-        h2, m2, s2, ms2 = dz(end)
-        fo.write(str(x) + "\n")
-        fo.write(sjz.format(h, m, s, ms, h2, m2, s2, ms2) + "\n")
-        fo.write(zm[x - 1] + "\n")
-        fo.write("\n")
-        x += 1
-    fo.close()
+    for s in res.get("tracks"):
+        if s.get("subType") == "sub_sticker_text" or  s.get("type") == "text" :
+            for i in s.get("segments"):
+                start = i.get("target_timerange").get("start") / y
+                end = i.get("target_timerange").get("start") / y + i.get("target_timerange").get("duration") / y
+                sjz = "{0}:{1}:{2},{3} --> {4}:{5}:{6},{7}"
+                h, m, s, ms = dz(start)
+                h2, m2, s2, ms2 = dz(end)
+                fo.write(str(x) + "\n")
+                fo.write(sjz.format(h, m, s, ms, h2, m2, s2, ms2) + "\n")
+                fo.write(zm[i.get("material_id")] + "\n")
+                fo.write("\n")
+                x += 1
 
 
 def upload(request):
