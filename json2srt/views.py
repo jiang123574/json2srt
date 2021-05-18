@@ -66,7 +66,7 @@ def json2srt():
 
 def upload(request):
     if request.method == "POST":
-        myFile = request.FILES.get("myfile", None)
+        myFile = request.FILES.get("json2srt", None)
 
         if not myFile:
             return HttpResponse("no files")
