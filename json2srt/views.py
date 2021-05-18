@@ -50,7 +50,7 @@ def json2srt():
     x = 1
     fo = open(os.path.join(base_dir, 'uploads', "zm.srt"), "w")
     for s in res.get("tracks"):
-        if s.get("subType") == "sub_sticker_text" or  s.get("type") == "text" :
+        if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
             for i in s.get("segments"):
                 start = i.get("target_timerange").get("start") / y
                 end = i.get("target_timerange").get("start") / y + i.get("target_timerange").get("duration") / y
@@ -81,10 +81,8 @@ def upload(request):
 
 
 def file_down(request):
-    file_name = "zm.srt"
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    file_path = os.path.join(base_dir, 'uploads', file_name)
-
+    file_path = os.path.join(base_dir, 'uploads', "zm.srt")
     if not os.path.isfile(file_path):  # 判断下载文件是否存在
         return HttpResponse(file_path)
 
