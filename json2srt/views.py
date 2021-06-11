@@ -41,7 +41,7 @@ def json2srt(file_name):
                 h2, m2, s2, ms2 = dz(end)
                 # fo.write(str(x) + "\n")
                 fo.write(sjz % (h, m, s, ms, h2, m2, s2, ms2) + "\n")
-                fo.write(zm[i.get("material_id")].encode('utf-8') + "\n")
+                fo.write(str(zm[i.get("material_id")].encode('utf-8')) + "\n")
                 fo.write("\n")
                 # x += 1
     fo.close()
