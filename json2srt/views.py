@@ -50,7 +50,6 @@ def upload(request):
         if not myFile:
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        print(base_dir)
         destination = open(os.path.join(base_dir, 'uploads', "draft.json"), 'wb+')
         for chunk in myFile.chunks():
             destination.write(chunk)
