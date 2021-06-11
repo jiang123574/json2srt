@@ -57,11 +57,7 @@ def upload(request):
         destination.close()
         srt_name = json2srt(file_name)
         request.session['srt_name'] = srt_name
-        return down(request)
-
-
-def down(request):
-    return render(request, 'down.html')
+        return render(request, 'down.html')
 
 
 def file_down(request):
