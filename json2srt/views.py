@@ -30,7 +30,7 @@ def json2srt(file_name):
         zm[i.get("id")] = i.get("content")
     # x = 1
     srt_name = file_name.split(".")[0] + ".srt"
-    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w", encoding="utf-8")
+    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w+", encoding="utf-8")
     for s in res.get("tracks"):
         if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
             for i in s.get("segments"):
@@ -41,7 +41,7 @@ def json2srt(file_name):
                 h2, m2, s2, ms2 = dz(end)
                 # fo.write(str(x) + "\n")
                 fo.write(sjz % (h, m, s, ms, h2, m2, s2, ms2) + "\n")
-                fo.write(zm[i.get("material_id")] + "\n")
+                fo.write(zm[i.get("material_id")].encode('utf-8') + "\n")
                 fo.write("\n")
                 # x += 1
     fo.close()
