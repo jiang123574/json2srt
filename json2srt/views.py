@@ -21,7 +21,6 @@ def dz(x):
 def json2srt(file_name):
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     res = json.load(open(os.path.join(base_dir, 'uploads', file_name), encoding="utf-8"))
-    print(res)
     if res.get("platform").get("os") == "macOS":
         y = 1
     else:
@@ -55,12 +54,13 @@ def upload(request):
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         file_name = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',10))+".json"
-        destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+',encoding='utf-8')
+        destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+')
+        print(destination)
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
-        srt_name = json2srt(file_name)
-        request.session['srt_name'] = srt_name
+        # srt_name = json2srt(file_name)
+        # request.session['srt_name'] = srt_name
         return render(request, 'down.html')
 
 
