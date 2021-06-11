@@ -59,8 +59,8 @@ def upload(request):
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
-        # srt_name = json2srt(file_name)
-        # request.session['srt_name'] = srt_name
+        srt_name = json2srt(file_name)
+        request.session['srt_name'] = srt_name
         return render(request, 'down.html')
 
 
