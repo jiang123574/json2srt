@@ -2,9 +2,9 @@
 import json
 import os
 import random
+
 from django.http import StreamingHttpResponse
 from django.shortcuts import render, HttpResponse
-
 
 
 def index(request):
@@ -13,7 +13,7 @@ def index(request):
 
 def dz(x):
     ms = int(x % 1000)
-    m, s = divmod(x/1000, 60)
+    m, s = divmod(x / 1000, 60)
     h, m = divmod(m, 60)
     return h, m, s, ms
 
@@ -29,8 +29,8 @@ def json2srt(file_name):
     for i in res.get("materials").get("texts"):
         zm[i.get("id")] = i.get("content")
     # x = 1
-    srt_name = file_name.split(".")[0]+".srt"
-    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w")
+    srt_name = file_name.split(".")[0] + ".srt"
+    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w", encoding="utf-8")
     for s in res.get("tracks"):
         if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
             for i in s.get("segments"):
@@ -47,13 +47,15 @@ def json2srt(file_name):
     fo.close()
     return srt_name
 
+
 def upload(request):
     if request.method == "POST":
         myFile = request.FILES.get("json2srt", None)
         if not myFile:
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_name = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',10))+".json"
+        file_name = ''.join(
+            random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)) + ".json"
         destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+')
         for chunk in myFile.chunks():
             destination.write(chunk)
@@ -78,6 +80,7 @@ def file_down(request):
                     yield c
                 else:
                     break
+
     try:
         # 设置响应头
         # StreamingHttpResponse将文件内容进行流式传输，数据量大可以用这个方法
@@ -90,4 +93,3 @@ def file_down(request):
     except:
         return HttpResponse("文件不存在")
     return response
-
