@@ -30,7 +30,7 @@ def json2srt(file_name):
         zm[i.get("id")] = i.get("content")
     x = 1
     srt_name = file_name.split(".")[0]+".srt"
-    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w",encoding='utf-8')
+    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w")
     for s in res.get("tracks"):
         if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
             for i in s.get("segments"):
