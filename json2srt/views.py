@@ -10,30 +10,9 @@ def index(request):
 
 
 def dz(x):
-    ms = "00"
-    s = "00"
-    m = "00"
-    h = "00"
-    if x / 1000 < 1:
-        ms = str(int(x % 1000)).rjust(3, '0')
-        s = "00"
-        m = "00"
-        h = "00"
-    elif 1 < x / 1000 < 60:
-        ms = str(int(x % 1000)).rjust(3, '0')
-        s = str(int(x // 1000 % 60)).rjust(2, '0')
-        m = "00"
-        h = "00"
-    elif 60 <= x / 1000 < 3600:
-        ms = str(int(x % 1000)).rjust(3, '0')
-        s = str(int(x // 1000 % 60)).rjust(2, '0')
-        m = str(int(x // 1000 // 60)).rjust(2, '0')
-        h = "00"
-    elif x / y >= 3600:
-        ms = str(int(x % 1000)).rjust(3, '0')
-        s = str(int(x // 1000 % 60)).rjust(2, '0')
-        m = str(int(x // 1000 // 60)).rjust(2, '0')
-        h = str(int(x // 1000 // 60 // 60)).rjust(2, '0')
+    ms = int(x % 1000)
+    m, s = divmod(x/1000, 60)
+    h, m = divmod(m, 60)
     return h, m, s, ms
 
 
@@ -86,7 +65,7 @@ def file_down(request):
     if not os.path.isfile(file_path):  # 判断下载文件是否存在
         return HttpResponse(file_path)
 
-    def file_iterator(file_path, chunk_size=512):
+    def file_iterator(file_path, chunk_size=1024):
         with open(file_path, mode='rb') as f:
             while True:
                 c = f.read(chunk_size)
