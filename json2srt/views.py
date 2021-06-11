@@ -55,7 +55,7 @@ def upload(request):
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         file_name = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',10))+".json"
-        destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+')
+        destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+',encoding='utf-8')
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
