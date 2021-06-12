@@ -20,5 +20,4 @@ from . import views
 urlpatterns = [
     path('', views.index),
     path('upload/', views.upload, name='upload'),
-    path('file_down/', views.file_down, name='file_down'),
 ]

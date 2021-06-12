@@ -2,6 +2,7 @@
 import json
 import os
 import random
+import time
 
 from django.http import StreamingHttpResponse
 from django.shortcuts import render, HttpResponse
@@ -42,7 +43,7 @@ def json2srt(file_name):
                 fo.write(str(x) + "\n")
                 fo.write(sjz % (h, m, s, ms, h2, m2, s2, ms2) + "\n")
                 fo.write(zm[i.get("material_id")] + "\n")
-                fo.write(("\n"))
+                fo.write("\n")
                 x += 1
     fo.close()
     return srt_name
@@ -92,3 +93,16 @@ def file_down(request):
     except:
         return HttpResponse("文件不存在")
     return response
+
+
+
+# def del_file(request):
+#     try:
+#         return file_down(request)
+#     finally:
+#         srt_name = request.session['srt_name']
+#         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#         file_path = os.path.join(base_dir, 'uploads', srt_name)
+#         os.remove(file_path)
+#         os.remove(file_path.split(".")[0] + ".json")
+
