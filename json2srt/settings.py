@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-rp+x))dq)ji(7r#nq%0p%-gzz0-s_%_ih9!l3@tva8-f1=%nkk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ddns.clegea.win', '127.0.0.1']
+ALLOWED_HOSTS = ['ddns.clegea.win', '127.0.0.1','192.168.2.*']
 
 # Application definition
 
