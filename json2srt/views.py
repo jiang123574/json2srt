@@ -19,35 +19,37 @@ def dz(x):
     return h, m, s, ms
 
 
-def json2srt(file_name):
+def json2srt(file_name,request):
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     res = json.load(open(os.path.join(base_dir, 'uploads', file_name), encoding="utf-8"))
-    if res.get("platform").get("os") == "macOS":
-        y = 1
-    else:
-        y = 1000
-    zm = {}
-    for i in res.get("materials").get("texts"):
-        zm[i.get("id")] = i.get("content")
-    x = 1
-    srt_name = file_name.split(".")[0] + ".srt"
-    fo = open(os.path.join(base_dir, 'uploads', srt_name), "w+")
-    for s in res.get("tracks"):
-        if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
-            for i in s.get("segments"):
-                start = i.get("target_timerange").get("start") / y
-                end = i.get("target_timerange").get("start") / y + i.get("target_timerange").get("duration") / y
-                sjz = "%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d"
-                h, m, s, ms = dz(start)
-                h2, m2, s2, ms2 = dz(end)
-                fo.write(str(x) + "\n")
-                fo.write(sjz % (h, m, s, ms, h2, m2, s2, ms2) + "\n")
-                fo.write(zm[i.get("material_id")] + "\n")
-                fo.write("\n")
-                x += 1
-    fo.close()
-    return srt_name
-
+    try:
+        if res.get("platform").get("os") == "macOS":
+            y = 1
+        else:
+            y = 1000
+        zm = {}
+        for i in res.get("materials").get("texts"):
+            zm[i.get("id")] = i.get("content")
+        x = 1
+        srt_name = file_name.split(".")[0] + ".srt"
+        fo = open(os.path.join(base_dir, 'uploads', srt_name), "w+")
+        for s in res.get("tracks"):
+            if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
+                for i in s.get("segments"):
+                    start = i.get("target_timerange").get("start") / y
+                    end = i.get("target_timerange").get("start") / y + i.get("target_timerange").get("duration") / y
+                    sjz = "%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d"
+                    h, m, s, ms = dz(start)
+                    h2, m2, s2, ms2 = dz(end)
+                    fo.write(str(x) + "\n")
+                    fo.write(sjz % (h, m, s, ms, h2, m2, s2, ms2) + "\n")
+                    fo.write(zm[i.get("material_id")] + "\n")
+                    fo.write("\n")
+                    x += 1
+        fo.close()
+        return srt_name,1
+    except:
+        return 2,2
 
 def upload(request):
     if request.method == "POST":
@@ -60,9 +62,14 @@ def upload(request):
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
-        srt_name = json2srt(file_name)
-        request.session['srt_name'] = srt_name
-        return file_down(request)
+
+        srt_name = json2srt(file_name,request)
+        if srt_name[1] == 1:
+            request.session['srt_name'] = srt_name[0]
+            return file_down(request)
+        elif srt_name[1] == 2:
+            return render(request, 'error.html')
+
 
 
 def file_down(request):
