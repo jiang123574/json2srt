@@ -7,11 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link REL="SHORTCUT ICON" HREF="{% static "imge/favicon.ico" %}">
     <title>剪映json转换为srt字幕</title>
+    <link rel="preconnect" href="https://fonts.lug.ustc.edu.cn">
+    <link rel="preconnect" href="https://fonts.lug.ustc.edu.cn" crossorigin>
+    <link href="https://fonts.lug.ustc.edu.cn/css2?family=Noto+Sans+SC:wght@100;400&display=swap" rel="stylesheet">
 {#    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">#}
+    <style>
+
+        body {
+            {#background-color: #eeeeee;#}
+            {#width: 500px;#}
+            font-family: 'Noto Sans SC', sans-serif;
+            border: 25px solid #ffd4c7;
+            {#border-color: #efec8f;#}
+            padding: 25px;
+            {#margin: 25px;#}
+            }
+    </style>
 </head>
 
 <body>
 <h2>使用剪映识别字幕后导出srt</h2>
+
 <form enctype="multipart/form-data" action="/upload/" method="post">
     <input type="file" name="json2srt"/>
     <input type="submit" value="开始转换"/>
@@ -19,7 +35,10 @@
 <br>
 <a href="https://space.bilibili.com/903059" >作者:B站 ClegeA</a>
 <h1></h1>
+<br />
+<hr />
 <h2>使用方法</h2>
+
 <p>首先将视频导入到剪映电脑版本</p>
 <p>点击识别字幕</p>
 <p>识别完成后关掉剪映</p>
