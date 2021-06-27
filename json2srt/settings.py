@@ -112,7 +112,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎（默认）
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 引擎（默认）
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

@@ -28,8 +28,13 @@
 
 <body>
 <h2>剪映识别字幕导出srt</h2>
-
+<p>导出带时间轴srt</p>
 <form enctype="multipart/form-data" action="/upload/" method="post">
+    <input type="file" name="json2srt"/>
+    <input type="submit" value="开始转换"/>
+</form>
+<p>导出纯文本srt</p>
+<form enctype="multipart/form-data" action="/upload2/" method="post">
     <input type="file" name="json2srt"/>
     <input type="submit" value="开始转换"/>
 </form>
