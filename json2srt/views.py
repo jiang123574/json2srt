@@ -3,6 +3,7 @@ import json
 import os
 import random
 import time
+import codecs
 
 from django.http import StreamingHttpResponse
 from django.shortcuts import render, HttpResponse
@@ -19,7 +20,7 @@ def dz(x):
     return h, m, s, ms
 
 
-def json2srt(file_name,request,model=0):
+def json2srt(file_name, request, model=0):
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     res = json.load(open(os.path.join(base_dir, 'uploads', file_name), encoding="utf-8"))
     try:
@@ -32,7 +33,7 @@ def json2srt(file_name,request,model=0):
             zm[i.get("id")] = i.get("content")
         x = 1
         srt_name = file_name.split(".")[0] + ".srt"
-        fo = open(os.path.join(base_dir, 'uploads', srt_name), "w+")
+        fo = codecs.open(os.path.join(base_dir, 'uploads', srt_name), "w+", "utf_8_sig")
         for s in res.get("tracks"):
             if s.get("subType") == "sub_sticker_text" or s.get("type") == "text":
                 for i in s.get("segments"):
@@ -47,12 +48,12 @@ def json2srt(file_name,request,model=0):
                         fo.write(zm[i.get("material_id")] + "\n")
                         fo.write("\n")
                         x += 1
-                    elif model ==2 :
+                    elif model == 2:
                         fo.write(zm[i.get("material_id")] + "\n")
         fo.close()
-        return srt_name,1
+        return srt_name, 1
     except:
-        return 2,2
+        return 2, 2
 
 
 def upload(request):
@@ -61,17 +62,19 @@ def upload(request):
         if not myFile:
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_name = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)) + ".json"
+        file_name = ''.join(
+            random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)) + ".json"
         destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+')
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
-        srt_name = json2srt(file_name,request,1)
+        srt_name = json2srt(file_name, request, 1)
         if srt_name[1] == 1:
             request.session['srt_name'] = srt_name[0]
             return file_down(request)
         elif srt_name[1] == 2:
             return render(request, 'error.html')
+
 
 def upload2(request):
     if request.method == "POST":
@@ -79,17 +82,19 @@ def upload2(request):
         if not myFile:
             return HttpResponse("no files")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_name = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)) + ".json"
+        file_name = ''.join(
+            random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)) + ".json"
         destination = open(os.path.join(base_dir, 'uploads', file_name), 'wb+')
         for chunk in myFile.chunks():
             destination.write(chunk)
         destination.close()
-        srt_name = json2srt(file_name,request,2)
+        srt_name = json2srt(file_name, request, 2)
         if srt_name[1] == 1:
             request.session['srt_name'] = srt_name[0]
             return file_down(request)
         elif srt_name[1] == 2:
             return render(request, 'error.html')
+
 
 def file_down(request):
     srt_name = request.session['srt_name']
@@ -120,8 +125,6 @@ def file_down(request):
         return HttpResponse("文件不存在")
     return response
 
-
-
 # def del_file(request):
 #     try:
 #         return file_down(request)
@@ -131,4 +134,3 @@ def file_down(request):
 #         file_path = os.path.join(base_dir, 'uploads', srt_name)
 #         os.remove(file_path)
 #         os.remove(file_path.split(".")[0] + ".json")
-
