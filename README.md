@@ -4,7 +4,7 @@
 
  - 实现fcpx的xml字幕工程
 
-##本地部署
+## 本地部署
 >需要有python3环境
 
 1. 首先克隆本项目 ```https://github.com/jiang123574/json2srt.git```
