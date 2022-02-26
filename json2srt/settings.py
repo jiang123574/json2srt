@@ -124,3 +124,4 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [("css", os.path.join(STATIC_ROOT, 'css')), ("imge", os.path.join(STATIC_ROOT, 'imge'))]
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
