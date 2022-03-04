@@ -12,3 +12,5 @@
 3. 运行本项目 ```python3 manage.py runserver```
 
 ## docker部署
+
+开放8800端口
