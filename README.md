@@ -11,3 +11,4 @@
 2. 安装django ```pip3 install -r requirements.txt```或者```pip3 install django```
 3. 运行本项目 ```python3 manage.py runserver```
 
+## docker部署
