@@ -30,7 +30,7 @@ def json2srt(file_name, request, model=0):
             y = 1000
         zm = {}
         for i in res.get("materials").get("texts"):
-            if float(res.get("platform").get("app_version")[0:3]) > 2.9:
+            if float(res.get("platform").get("app_version")[0:3]) >= 2.9:
                 zm[i.get("id")] = i.get("content").split(">")[3][:-6]
             else:
                 zm[i.get("id")] = i.get("content")
