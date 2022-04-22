@@ -30,7 +30,10 @@ def json2srt(file_name, request, model=0):
             y = 1000
         zm = {}
         for i in res.get("materials").get("texts"):
-            zm[i.get("id")] = i.get("content")
+            if float(res.get("platform").get("app_version")[0:3]) > 2.9:
+                zm[i.get("id")] = i.get("content").split(">")[3][:-6]
+            else:
+                zm[i.get("id")] = i.get("content")
         x = 1
         srt_name = file_name.split(".")[0] + ".srt"
         fo = codecs.open(os.path.join(base_dir, 'uploads', srt_name), "w+", "utf_8_sig")
